@@ -1,0 +1,11 @@
+/wp-content/*
+
+!/wp-content/themes/
+/wp-content/themes/*
+!/wp-content/themes/custom-theme/
+
+!/wp-content/plugins/
+/wp-content/plugins/*
+!/wp-content/plugins/custom-plugin/
+
+!/wp-content/uploads/

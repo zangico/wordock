@@ -3,7 +3,7 @@ sync_to_github:
   script:
     - mkdir -p ~/.ssh
     - echo "$GITLAB_TO_GITHUB_KEY" > ~/.ssh/id_ed25519
-    - git config --global core.sshCommand "ssh --vvv"
+    - git config --global core.sshCommand "ssh -vvv"
     - chmod 600 ~/.ssh/id_ed25519
     - ssh-keyscan github.com >> ~/.ssh/known_hosts
     - git remote add github git@github.com:zangico/wordock.git

@@ -19,7 +19,7 @@ docker-compose run --rm wpcli db import "$BACKUP_FILE" --allow-root --skip-ssl
 # Update URLs in the database if necessary
 if [ ! -z "$NEW_DOMAIN" ]; then
     echo "Updating URLs in the database with the new domain: $NEW_DOMAIN"
-    OLD_DOMAIN=$(docker-compose run --rm wpcli option get siteurl --allow-root --skip-ssl | tr -d '\r')
+    OLD_DOMAIN=$(docker-compose run --rm wpcli option get siteurl --allow-root | tr -d '\r')
 
     if [ -z "$OLD_DOMAIN" ]; then
         echo "Error: unable to retrieve the old domain from the database."
@@ -27,7 +27,7 @@ if [ ! -z "$NEW_DOMAIN" ]; then
     fi
 
     echo "Detected old domain: $OLD_DOMAIN"
-    docker-compose run --rm wpcli search-replace "$OLD_DOMAIN" "$NEW_DOMAIN" --all-tables --allow-root --skip-ssl
+    docker-compose run --rm wpcli search-replace "$OLD_DOMAIN" "$NEW_DOMAIN" --all-tables --allow-root
 fi
 
 echo "Restore completed!"

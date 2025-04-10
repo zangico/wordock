@@ -10,7 +10,7 @@ if [ -f .env ]; then
     export $(grep -v '^#' .env | xargs)
 fi
 
-docker-compose run --rm wpcli db export "$BACKUP_FILE" --allow-root --skip-ssl
+docker compose run --rm wpcli db export "$BACKUP_FILE" --allow-root --skip-ssl
 
 if [ $? -eq 0 ]; then
     echo "✅ Database backup completed successfully: $BACKUP_FILE"

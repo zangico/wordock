@@ -56,6 +56,44 @@ To restore the database from a backup file, run:
 - Replace `path/to/backup/file.sql` with the path to your backup file.
 - Optionally, specify a new domain (e.g., `http://new-domain.com`) to update URLs in the database.
 
+## Nginx Configuration
+
+```bash
+sudo nano /etc/nginx/sites-available/wordpress
+```
+
+```nginx
+server {
+    listen 80;
+    server_name domain.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:18080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+```bash
+sudo ln -s /etc/nginx/sites-available/wordpress /etc/nginx/sites-enabled/
+sudo nginx -t && sudo systemctl reload nginx
+```
+
+### TLS
+
+Disable temporary Nginx configuration and create certificates
+
+```bash
+sudo systecmctl stop nginx
+sudo certbot --nginx -d domain.com
+sudo systemctl start nginx
+```
+
+
+
 ## Customization
 
 - Add your custom themes to `wp-content/themes/custom-theme/`.
